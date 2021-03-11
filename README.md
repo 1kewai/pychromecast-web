@@ -5,3 +5,4 @@ https://(サーバーアドレス)/speak?device=デバイス名&sentence=文字�
 https://(サーバーアドレス)/pause?device=デバイス名　で再生の一時停止  
 https://(サーバーアドレス)/resume?device=デバイス名　で再開  
 https://(サーバーアドレス)/info?device=デバイス名 およびhttps://(サーバーアドレス)/status?device=デバイス名　でデバイスの状態の取得が可能です。  
+https://(サーバーアドレス)/info?device=デバイス名&url=リンク&metadata=形式　でデバイスへのメディアのキャストが可能です。
