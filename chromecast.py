@@ -155,6 +155,34 @@ def resume():
         pychromecast.discovery.stop_discovery(browser)
         return "Internal Error",500
 
+#Google CastデバイスにURLからキャスト
+@app.route("/cast")
+def cast():
+    #引数が正しいかチェックを行う
+    try:
+        print("devicename="+request.args.get("device")+"  URL="+request.args.get("url")+"  metadata="+request.args.get("metadata"))
+    except:
+        return "Bad Request",400
+
+    #実際の処理を行う
+    try:
+        device=request.args.get("device")
+        cast,browser=pychromecast.get_listed_chromecasts(friendly_names=[device])
+        mc=cast[0].media_controller
+        cast[0].wait()
+        mc.play_media(url,metadata)
+        pychromecast.discovery.stop_discovery(browser)#chromecast discoveryを停止してシステムリソースを節約する
+        time.sleep(1)
+        #処理が正常終了し、Google castからメディアデータへのアクセスが行われた場合
+        return "OK",200
+    #Internal Error
+    except:
+        try:
+            pychromecast.discovery.stop_discovery(browser)#chromecast discoveryを停止してシステムリソースを節約する
+        except:
+            pass
+        return "Internal Error",500
+
 #ウェブアプリ実行
 if __name__ == "__main__":
         app.run(debug=True,host="0.0.0.0",port=10000)
